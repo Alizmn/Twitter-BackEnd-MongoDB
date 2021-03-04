@@ -1,7 +1,9 @@
 require("dotenv").config();
 const mongoose = require("mongoose");
+const env = process.env.NODE_ENV || "development";
+const config = require("../config/config")[env];
 
-const url = `mongodb+srv://${process.env.USER_NAME}:${process.env.PASSWORD}@kraken.2r52h.mongodb.net/${process.env.DB_NAME}?retryWrites=true&w=majority`;
+const url = `mongodb+srv://${config.username}:${config.password}@kraken.2r52h.mongodb.net/${process.env.DB_NAME}?retryWrites=true&w=majority`;
 
 const connectionParams = {
   useNewUrlParser: true,
@@ -12,7 +14,7 @@ const connectionParams = {
 module.exports = mongoose
   .connect(url, connectionParams)
   .then(() => {
-    console.log(`Connected to ${process.env.DB_NAME} database `);
+    console.log(`Connected to ${config.dbName} database `);
   })
   .catch((err) => {
     console.error(`Error connecting to the database. \n${err}`);
