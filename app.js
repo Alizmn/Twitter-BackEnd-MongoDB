@@ -13,6 +13,7 @@ const logger = require("morgan");
 const indexRouter = require("./routes/index");
 const userRouter = require("./routes/user");
 const authRouter = require("./routes/auth");
+const chatRouter = require("./routes/chat");
 
 const app = express();
 
@@ -27,6 +28,7 @@ app.use(express.static(path.join(__dirname, "public")));
 
 app.use("/", indexRouter);
 app.use("/auth", authRouter);
+app.use("/chat", chatRouter);
 app.use("/user", userRouter);
 
 module.exports = app;
