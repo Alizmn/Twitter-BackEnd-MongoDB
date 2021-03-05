@@ -17,9 +17,9 @@ passport.use(
     },
     function (email, password, done) {
       if (email.split("").includes("@")) {
-        login = { email: email };
+        login = { email: email.toLowerCase() };
       } else {
-        login = { username: email };
+        login = { username: email.toLowerCase() };
       }
       User.findOne(login, function (err, user) {
         if (err) {

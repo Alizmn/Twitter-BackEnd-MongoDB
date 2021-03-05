@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 const env = process.env.NODE_ENV || "development";
 const config = require("../config/config")[env];
 
-const url = `mongodb+srv://${config.username}:${config.password}@kraken.2r52h.mongodb.net/${process.env.DB_NAME}?retryWrites=true&w=majority`;
+const url = `mongodb+srv://${config.username}:${config.password}@kraken.2r52h.mongodb.net/${config.dbName}?retryWrites=true&w=majority`;
 
 const connectionParams = {
   useNewUrlParser: true,

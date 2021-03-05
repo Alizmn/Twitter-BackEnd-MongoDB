@@ -45,36 +45,37 @@ router.post("/register", (req, res, next) => {
     const { username, name, email, password } = req.body;
     if (!username || !name || !email || !password) {
       res.status(406).json({ msg: "Please provide all the requierd fields" });
-    }
-    const newUser = {
-      username,
-      name,
-      email,
-      password,
-    };
+    } else {
+      const newUser = {
+        username: username.toLowerCase(),
+        name,
+        email: email.toLowerCase(),
+        password,
+      };
 
-    User.findOne({ username: req.body.username })
-      .then((user) => {
-        if (!user) {
-          User.findOne({ email: req.body.email })
-            .then((user) => {
-              if (!user) {
-                bcrypt.hash(req.body.password, 10, (err, hash) => {
-                  newUser.password = hash;
-                  User.create(newUser)
-                    .then(() => res.json({ msg: "created successfully" }))
-                    .catch((err) => res.send(err));
-                });
-              } else {
-                res.json({ msg: "email already used" });
-              }
-            })
-            .catch((err) => res.send(err));
-        } else {
-          res.json({ msg: "username already exist" });
-        }
-      })
-      .catch((err) => res.send(err));
+      User.findOne({ username: newUser.username })
+        .then((user) => {
+          if (!user) {
+            User.findOne({ email: newUser.email })
+              .then((user) => {
+                if (!user) {
+                  bcrypt.hash(newUser.password, 10, (err, hash) => {
+                    newUser.password = hash;
+                    User.create(newUser)
+                      .then(() => res.json({ msg: "created successfully" }))
+                      .catch((err) => res.send(err));
+                  });
+                } else {
+                  res.json({ msg: "email already used" });
+                }
+              })
+              .catch((err) => res.send(err));
+          } else {
+            res.json({ msg: "username already exist" });
+          }
+        })
+        .catch((err) => res.send(err));
+    }
   }
 });
 
