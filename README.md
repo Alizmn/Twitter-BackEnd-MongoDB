@@ -12,7 +12,7 @@ It's just a backend with a well-formed and expandable API. The API adheres to RE
   - Socket.io
 - Express.js
 - MongoDB
-  -Mongoose
+  - Mongoose
 - Jest
   - supertest
 
