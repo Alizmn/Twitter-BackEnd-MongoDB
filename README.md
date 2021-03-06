@@ -6,6 +6,7 @@ It's just a backend with a well-formed and expandable API. The API adheres to RE
 ## TECH STACKS
 
 - Node.js
+  - Passport
   - bcrypt
   - JSON Web Tokens
   - nodemon
