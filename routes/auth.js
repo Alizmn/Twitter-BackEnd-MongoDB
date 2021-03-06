@@ -6,6 +6,7 @@ const bcrypt = require("bcrypt");
 const User = require("../db/Schema/userSchema");
 require("dotenv").config();
 
+// ------------------------LOGIN ENDPOINT----------------
 router.post("/login", (req, res, next) => {
   if (req.headers.authorization) {
     res.json({ msg: "You are already in, logout first!" }); // <-------- If Header is avaialable, user can't login again!
@@ -38,6 +39,7 @@ router.post("/login", (req, res, next) => {
   }
 });
 
+// ------------------------REGISTER ENDPOINT----------------
 router.post("/register", (req, res, next) => {
   if (req.headers.authorization) {
     res.json({ msg: "You are already in, logout first!" }); // <-------- If Header is avaialable, user can't register!
@@ -79,9 +81,11 @@ router.post("/register", (req, res, next) => {
   }
 });
 
+// ------------------------USER ENDPOINT----------------
 router.get(
   "/user",
   passport.authenticate("jwt", { session: false }),
+  // ^----------------------------------------------------It's good to have this one although it's not in use now
   async (req, res) => {
     try {
       const user = await User.findOne({ username: req.user.username });

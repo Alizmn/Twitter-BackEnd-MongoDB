@@ -16,6 +16,7 @@ passport.use(
       session: false,
     },
     function (email, password, done) {
+      //  ^-----------------------------------it would be possible to login with both email or username
       if (email.split("").includes("@")) {
         login = { email: email.toLowerCase() };
       } else {
@@ -49,6 +50,7 @@ passport.use(
 
 passport.use(
   new JwtStrategy(
+    // ^------------------------------this trategy is great to authorize the token and allow access
     {
       jwtFromRequest: ExtractJwt.fromHeader("authorization"),
       secretOrKey: process.env.JWT_SECRET,

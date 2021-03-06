@@ -45,7 +45,6 @@ app.use("/user", userRouter);
 const db = require("./db");
 
 // ----------------------SOCKET.IO------------
-// const io = require("socket.io")(server);
 io.use(function (socket, next) {
   if (socket.handshake.query && socket.handshake.query.token) {
     jwt.verify(

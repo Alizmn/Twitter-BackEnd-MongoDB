@@ -6,7 +6,7 @@ const bcrypt = require("bcrypt");
 const User = require("../db/Schema/userSchema");
 const { Conversation, Message } = require("../db/Schema/chatSchema");
 
-//get all user conversations
+// Get all user conversations
 router.get(
   "/conversations",
   passport.authenticate("jwt", { session: false }),
@@ -51,7 +51,7 @@ router.get(
   }
 );
 
-//get single conversation
+// Get single conversation
 router.get(
   "/conversation",
   passport.authenticate("jwt", { session: false }),
@@ -83,7 +83,7 @@ router.post("/test", (req, res) => {
   res.json({ req, res });
 });
 
-//start a conv
+// Start a new conversation
 router.post(
   "/conversation",
   passport.authenticate("jwt", { session: false }),
