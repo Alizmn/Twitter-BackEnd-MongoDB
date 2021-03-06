@@ -1,3 +1,5 @@
+// This file define the parameter for developement and testing enviroment
+
 require("dotenv").config();
 
 module.exports = {

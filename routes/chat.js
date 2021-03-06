@@ -79,6 +79,10 @@ router.get(
   }
 );
 
+router.post("/test", (req, res) => {
+  res.json({ req, res });
+});
+
 //start a conv
 router.post(
   "/conversation",
@@ -86,8 +90,12 @@ router.post(
   async (req, res) => {
     let user1 = req.user._id;
     let user2 = req.body.id;
+    let content = req.body.content;
+    // let user2 = "60424901acda1e34d44590f2";
+    // let content = "hello";
 
     console.log("here is the body:", req.body, user2, user1);
+
     try {
       const findChat = await Conversation.find({
         participants: { $all: [user1, user2] },
@@ -97,27 +105,27 @@ router.post(
           participants: [user1, user2],
         });
 
-        if (req.body.content) {
+        if (content) {
           let firstmessage = {
             sender: req.user._id,
-            content: req.body.content,
+            content: content,
           };
           let newMessage = await Message.create(firstmessage);
           newConversation.messages.push(newMessage);
         }
 
-        let userA = await User.findById(req.user._id);
-        let userB = await User.findById(req.body.id);
+        let userA = await User.findById(user1);
+        let userB = await User.findById(user2);
         newConversation.save();
         userA.conversations.unshift(newConversation);
         userA.save();
         userB.conversations.unshift(newConversation);
         userB.save();
       }
-      if (findChat.length > 0 && req.body.content) {
+      if (findChat.length > 0 && content) {
         let newMsg = {
-          sender: req.user._id,
-          content: req.body.content,
+          sender: user1,
+          content: content,
         };
         let addMsg = await Message.create(newMsg);
         findChat[0].messages.push(addMsg);
